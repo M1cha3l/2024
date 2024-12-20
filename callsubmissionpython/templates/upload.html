@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Call Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="logo mb-4">
+        <h1 class="mb-4">Upload call for QA</h1>
+        <p class="mb-4">Enter the details for the call in the form below, then upload the call recording. All fields are required.</p>
+        {% if message %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% elif error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="sfi_no">SFI Number:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">SFI-</span>
+                    </div>
+                    <input type="text" class="form-control short-field" id="sfi_no" name="sfi_no" placeholder="000000" required oninput="validateSFINumber(this)">
+                </div>
+                <small id="sfiError" class="form-text text-danger" style="display: none;">SFI Number must be exactly 6 digits.</small>
+            </div>            
+            <div class="form-group">
+                <label for="program">Program:</label>
+                <select class="form-control program-field" id="program" name="program" required onchange="updateSessions()">
+                    <option value="">Select Program</option>
+                    <option value="PEK-E">PEK-E</option>
+                    <option value="PEK-C">PEK-C</option>
+                    <option value="CWA-E">CWA-E</option>
+                    <option value="CWA-C">CWA-C</option>
+                    <option value="DANX-E">DANX-E</option>
+                    <option value="DANX-C">DANX-C</option>
+                    <option value="ICAN">ICAN</option>
+                    <option value="CCS">CCS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="session">Session:</label>
+                <select class="form-control session-field" id="session" name="session" required>
+                    <option value="">Select Session</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="first_name">Coach First Name:</label>
+                <input type="text" class="form-control short-field" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Coach Last Name:</label>
+                <input type="text" class="form-control short-field" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date (DDMMMYY):</label>
+                <input type="date" class="form-control date-picker" id="date" name="date" required>
+            </div>            
+            <div class="form-group">
+                <label for="file">Call Recording:</label>
+                <input type="file" class="form-control-file file-input" id="file" name="file" required>
+            </div>
+            <button type="submit" class="btn btn-primary upload-button">Upload</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validateSFINumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            let errorMessage = document.getElementById('sfiError');
+        
+            if (value.length !== 6) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        
+            // Update the input value without leading zeros
+            input.value = value;
+        }
+        </script>
+        <script>
+            const sessions = {
+                "PEK-E": ["Intro", "S1", "S2", "S3", "S4", "S5", "S6"],
+                "PEK-C": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S7 Check-in Youth", "S8", "S9", "S10", "S11"],
+                "CWA-E": ["S1", "S2", "S3", "S4", "S5"],
+                "CWA-C": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S7 Check-in Youth", "S8", "S9"],
+                "DANX-E": ["S1", "S2", "S3", "S4", "S5"],
+                "DANX-C": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S7 Check-in Youth", "S8", "S9"],
+                "ICAN": ["Intro", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"],
+                "CCS": ["Consent", "Intake", "Exit"]
+            };
+            
+            function updateSessions() {
+                const programSelect = document.getElementById('program');
+                const sessionSelect = document.getElementById('session');
+                const selectedProgram = programSelect.value;
+            
+                // Clear previous options
+                sessionSelect.innerHTML = '<option value="">Select Session</option>';
+            
+                if (selectedProgram && sessions[selectedProgram]) {
+                    sessions[selectedProgram].forEach(session => {
+                        const option = document.createElement('option');
+                        option.value = session;
+                        option.textContent = session;
+                        sessionSelect.appendChild(option);
+                    });
+                }
+            }
+    </script>
+            
+        
+</body>
+</html>

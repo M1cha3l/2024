@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="mb-4">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="logo mb-4">
         <h1 class="mb-4">File Uploaded Successfully</h1>
         <p class="mb-4">Your file has been uploaded successfully. Here is a summary of the information you provided:</p>
         <ul class="list-group mb-4">
@@ -20,7 +20,7 @@
             <li class="list-group-item"><strong>Coach Last Name:</strong> {{ last_name }}</li>
             <li class="list-group-item"><strong>Date:</strong> {{ date }}</li>
         </ul>
-        <a href="{{ url_for('upload_page') }}" class="btn btn-primary">Upload Another File</a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Upload Another File</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

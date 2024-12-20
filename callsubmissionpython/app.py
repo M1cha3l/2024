@@ -39,19 +39,20 @@ def upload_file():
         coach_name = f"{first_name}{last_name}"
 
         # Construct new file name
-        new_file_name = f"{sfi_no}.{program}.{session}.{coach_name}.{date}.mp4"
+        new_file_name = f"SFI-{sfi_no}.{program}.{session}.{coach_name}.{date}.mp4"
 
         # Upload file to Azurite
         blob_client = container_client.get_blob_client(new_file_name)
         blob_client.upload_blob(uploaded_file)
 
-        return jsonify({"message": f"File uploaded as {new_file_name}"}), 200
+         # Render the success page with form data
+        return render_template('success.html', sfi_no=sfi_no, program=program, session=session, first_name=first_name, last_name=last_name, date=date)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('upload.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

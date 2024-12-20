@@ -3,7 +3,12 @@ body {
 }
 
 h1 {
+    font-size: 2.0em;
     color: #ffffff;
+}
+
+p {
+    color: #ffffff
 }
 
 .form-group label {
@@ -55,4 +60,9 @@ h1 {
     width: auto;
     max-width: 200px; /* Adjust this value as needed */
     /* display: inline-block; /* Ensures the element doesn't stretch */
+}
+
+.logo {
+    width: 500px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
 }
