@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Success</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="mb-4">
+        <h1 class="mb-4">File Uploaded Successfully</h1>
+        <p class="mb-4">Your file has been uploaded successfully. Here is a summary of the information you provided:</p>
+        <ul class="list-group mb-4">
+            <li class="list-group-item"><strong>SFI Number:</strong> {{ sfi_no }}</li>
+            <li class="list-group-item"><strong>Program:</strong> {{ program }}</li>
+            <li class="list-group-item"><strong>Session:</strong> {{ session }}</li>
+            <li class="list-group-item"><strong>Coach First Name:</strong> {{ first_name }}</li>
+            <li class="list-group-item"><strong>Coach Last Name:</strong> {{ last_name }}</li>
+            <li class="list-group-item"><strong>Date:</strong> {{ date }}</li>
+        </ul>
+        <a href="{{ url_for('upload_page') }}" class="btn btn-primary">Upload Another File</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html
